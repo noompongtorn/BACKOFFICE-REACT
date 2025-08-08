@@ -33,7 +33,7 @@ const UserDetail = () => {
   }, [location.search]);
 
   function buildValue(params: any) {
-    const list = params.filter((item: any) => item.status === "inactive")
+    const list = params.filter((item: any) => item.status === "inactive");
 
     const newList = list.map((item: any) => {
       return {
@@ -41,7 +41,7 @@ const UserDetail = () => {
         name: item.name,
         index1: {
           color: item?.record_data?.rounds?.[0]?.isWin ? "green" : "red",
-          text: item.random.random[0]
+          text: item.random.random[0],
         },
         index2: {
           color: item?.record_data?.rounds?.[1]?.isWin ? "green" : "red",
@@ -64,41 +64,49 @@ const UserDetail = () => {
           text: item.random.random[5],
         },
         created_at: item.created_at,
-      }
-    })
+      };
+    });
     console.log(newList);
 
-    return newList
+    return newList;
   }
 
   async function reloadService() {
-    const results = await fetch('https://api-nba.cquiz.app/v1/app/admin-profile/' + id)
-    const results2 = await fetch('https://api-nba.cquiz.app/v1/app/admin-home-page.list/' + id)
+    const results = await fetch(
+      `${process.env.REACT_APP_URL_NBA}/v1/app/admin-profile/` + id
+    );
+    const results2 = await fetch(
+      `${process.env.REACT_APP_URL_NBA}/v1/app/admin-home-page.list/` + id
+    );
 
-    const results3 = await fetch('https://api-nba2.cquiz.app/v1/app/admin-profile/' + id)
-    const results4 = await fetch('https://api-nba2.cquiz.app/v1/app/admin-home-page.list/' + id)
+    const results3 = await fetch(
+      `${process.env.REACT_APP_URL_WNBA}/v1/app/admin-profile/` + id
+    );
+    const results4 = await fetch(
+      `${process.env.REACT_APP_URL_WNBA}/v1/app/admin-home-page.list/` + id
+    );
 
     if (results.status === 200) {
-      const resultDetail = await results.json()
-      const result2Detail = await results2.json()
-      const result3Detail = await results3.json()
-      const result4Detail = await results4.json()
+      const resultDetail = await results.json();
+      const result2Detail = await results2.json();
+      const result3Detail = await results3.json();
+      const result4Detail = await results4.json();
       setTotal1(resultDetail?.user?.total);
       setTotal2(result3Detail?.user?.total);
 
-      const value = buildValue(result2Detail?.record)
-      const value1 = buildValue(result4Detail?.record)
+      const value = buildValue(result2Detail?.record);
+      const value1 = buildValue(result4Detail?.record);
       setState(value);
       setState1(value1);
     }
   }
 
   async function handleClickP() {
-    setTab(0)
+    setTab(0);
   }
 
   async function handleClickNext() {
-    setTab(1)
+    setTab(1);
   }
 
   return (

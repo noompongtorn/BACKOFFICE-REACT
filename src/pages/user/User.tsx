@@ -28,24 +28,31 @@ const User = () => {
   async function reloadService() {
     const results = await getData<UserState[]>("/user/users");
 
-    const resultLast = await Promise.all(results.map(async (item) => {
-      const results = await fetch('https://api-nba.cquiz.app/v1/app/admin-profile/' + item.user_id)
+    const resultLast = await Promise.all(
+      results.map(async (item) => {
+        const results = await fetch(
+          `${process.env.REACT_APP_URL_NBA}/v1/app/admin-profile/` +
+            item.user_id
+        );
 
-      const results3 = await fetch('https://api-nba2.cquiz.app/v1/app/admin-profile/' + item.user_id)
+        const results3 = await fetch(
+          `${process.env.REACT_APP_URL_WNBA}/v1/app/admin-profile/` +
+            item.user_id
+        );
 
-      const resultDetail = await results.json()
-      const result3Detail = await results3.json()
-      const total1 = (resultDetail?.user?.total);
-      const total2 = (result3Detail?.user?.total);
-      const total3 = total1 + total2
-      return {
-        ...item,
-        balance1: total1,
-        balance2: total2,
-        balance3: total3,
-
-      }
-    }))
+        const resultDetail = await results.json();
+        const result3Detail = await results3.json();
+        const total1 = resultDetail?.user?.total;
+        const total2 = result3Detail?.user?.total;
+        const total3 = total1 + total2;
+        return {
+          ...item,
+          balance1: total1,
+          balance2: total2,
+          balance3: total3,
+        };
+      })
+    );
 
     setState(resultLast);
   }
@@ -53,14 +60,14 @@ const User = () => {
   async function handleClickP() {
     try {
       const response = await fetch(
-        "https://api-nba.cquiz.app/v1/app/retry-nba",
+        `${process.env.REACT_APP_URL_NBA}/v1/app/retry-nba`,
         {
           method: "GET",
         }
       );
 
       const response2 = await fetch(
-        "https://api-nba2.cquiz.app/v1/app/retry-nba",
+        `${process.env.REACT_APP_URL_WNBA}/v1/app/retry-nba`,
         {
           method: "GET",
         }
@@ -79,13 +86,19 @@ const User = () => {
 
   async function handleClickNext() {
     try {
-      const response = await fetch("https://api-nba.cquiz.app/v1/app/nba", {
-        method: "GET",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_NBA}/v1/app/nba`,
+        {
+          method: "GET",
+        }
+      );
 
-      const response2 = await fetch("https://api-nba2.cquiz.app/v1/app/nba", {
-        method: "GET",
-      });
+      const response2 = await fetch(
+        `${process.env.REACT_APP_URL_WNBA}/v1/app/nba`,
+        {
+          method: "GET",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
