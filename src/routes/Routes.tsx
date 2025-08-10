@@ -75,7 +75,7 @@ const Index: React.FC = () => {
         <Router>
           {token && <VerticalTab />} {/* Show VerticalTab only if authenticated */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/webadmin" element={<Home />} />
             <Route path="/histories" element={<ProtectedRoute element={<History />} />} />
             <Route path="/users" element={<ProtectedRoute element={<User />} />} />
             <Route path="/users/:id" element={<ProtectedRoute element={<UserDetail />} />} />
