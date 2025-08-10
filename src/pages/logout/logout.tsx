@@ -10,7 +10,7 @@ export default function Logout() {
         Cookies.remove('authToken')
         Cookies.remove('token')
 
-        window.open('/','_self')
+        window.open('/webadmin','_self')
     }
 
   return (

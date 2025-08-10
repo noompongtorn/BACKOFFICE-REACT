@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 // Create an Axios instance with default settings
 const api: AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_URL_NBA, // Use the environment variable
-    timeout: 10000, // Optional: Set a timeout for requests
+    timeout: 100000, // Optional: Set a timeout for requests
     headers: {
         'Content-Type': 'application/json',
         // Add any other headers you need here

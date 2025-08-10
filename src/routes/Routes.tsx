@@ -62,7 +62,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 // Protected Route Component
 const ProtectedRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? element : <Navigate to="/" />; // Redirect to Home if not authenticated
+  return isAuthenticated ? element : <Navigate to="/webadmin" />; // Redirect to Home if not authenticated
 };
 
 const Index: React.FC = () => {
@@ -75,6 +75,7 @@ const Index: React.FC = () => {
         <Router>
           {token && <VerticalTab />} {/* Show VerticalTab only if authenticated */}
           <Routes>
+            <Route path="/" element={<Navigate to="/webadmin" replace />} />
             <Route path="/webadmin" element={<Home />} />
             <Route path="/histories" element={<ProtectedRoute element={<History />} />} />
             <Route path="/users" element={<ProtectedRoute element={<User />} />} />
